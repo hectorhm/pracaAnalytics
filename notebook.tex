@@ -141,7 +141,8 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{An?lise\_Praca}
+    \title{ Análise Parcial dos Visitantes da Praça das Profissões ingressos na UFCG nos
+períodos 2015.1 a 2017.2}
     
     
     
@@ -280,261 +281,25 @@
     
 
     
-    Análise dos Visitantes da Praça das Profissões ingressos na UFCG nos
-períodos 2015.1 a 2017.2
+  
 
-Criado por Hector Medeiros com base nos dados dos visitantes da Praça
+\author{\textit{ Criado por Hector Medeiros com base nos dados dos visitantes da Praça das Profissões
 entre os anos de 2015 a 2017, juntamente com a relação de alunos
-ingressos na UFCG disponibilizada pela PRE. Todas as consultas
-envolvidas na pesquisa foram realizadas utilizando banco de dados
+ingressos na UFCG disponibilizada pela PRE. } \\
+
+Ao visitar o projeto o aluno visitante é questionado sobre qual curso ele almeja
+para sua formação acadêmica, ficando essa informação guardada no banco
+de dados do projeto. Visando analisar a quantidade de alunos que
+visitaram o projeto entre os anos de 2015 a 2017 e se estes alunos
+ingressaram como alunos da UFCG, foi-se pensado na criação deste
+trabalho.Todas as consultas envolvidas na pesquisa foram realizadas utilizando banco de dados
 relacional, sendo o PostGres o Sistema de Gerenciamento de Banco de
-Dados utilizado.
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}4}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
-        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
-        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
-        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-        \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ggplot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
+Dados utilizado. A ferramenta utilizada para a importar os dados dos arquivos e
+criar os gráficos foi o Jupyter Notebook, que oferece suporte a
+linguagem de programação Python. \\
 
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{}Leitura de Arquivo}
-        \PY{n}{ingressos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/resultadosPesquisa.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
 
-
-    A tabela abaixo engloba os nomes dos alunos juntamente com o curso que
-eles foram selecionados na UFCG, o curso que eles informaram que teriam
-interesse em cursar em sua visita na Praça das Profissões e também a
-escola onde estudavam.
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{ingressos}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}8}]:}                                               nome  \textbackslash{}
-        0                       ADRIEL MATEUS SILVA XAVIER   
-        1                       ADRIEL MATEUS SILVA XAVIER   
-        2                           ALICE MONTEIRO BAZANTE   
-        3                         ALINE RODRIGUES DA SILVA   
-        4                            AMANDA GUEDES BEZERRA   
-        5                      ANA BEATRIZ DA SILVA GUEDES   
-        6                        ANA BEATRIZ GOMES BARBOSA   
-        7                   ANDREZA VITORIA SANTOS TAVARES   
-        8                     ANNE CECILIA GALDINO BARRETO   
-        9                           ARTHUR COSTA DE FARIAS   
-        10                           BRUNA DANTAS DE SOUSA   
-        11                  CAMILA EDUARDA TRAVASSOS SILVA   
-        12                   CLARICE SOFIA HENRIQUE SOARES   
-        13                         CRISMARCOS ARAUJO SOUSA   
-        14                     DANILO CESAR ALVES DE SOUZA   
-        15                          DIOGO JOSE GOMES SILVA   
-        16               FILIPE CASSIANO OLIVEIRA DO CARMO   
-        17                      GABRIELA FERREIRA DA SILVA   
-        18                   GUSTAVO LUIZ BISPO DOS SANTOS   
-        19                     JARDEL KAIQUE SANTOS DUARTE   
-        20                     JESSE SOUZA CAVALCANTI NETO   
-        21                        JOAO PEDRO CAMELO GUEDES   
-        22           JOSE JAILTON DOS SANTOS MEDEIROS NETO   
-        23           JOSE JAILTON DOS SANTOS MEDEIROS NETO   
-        24                 LETICIA ARAUJO FONSECA DA SILVA   
-        25                       LETICIA CHAGAS CAVALCANTI   
-        26              LETICIA REBECCA MEDEIROS DE LUCENA   
-        27                       LUANA LAIS CABRAL LIMEIRA   
-        28                      LUCAS ADRIEL DANTAS XAVIER   
-        29                        LUCAS BOSCARINO DE SOUZA   
-        30                          LUCAS DE SANTANA COSTA   
-        31                       LUCAS NASCIMENTO DA SILVA   
-        32  MARCELLA MEDEIROS SIQUEIRA COUTINHO DE ALMEIDA   
-        33                 MARIA DO SOCORRO NUNES DA SILVA   
-        34                          MARIA EDUARDA DA SILVA   
-        35                          MARIA EDUARDA DA SILVA   
-        36                          MARIA EDUARDA DA SILVA   
-        37           MARIA EDUARDA MARTINS DUARTE DA COSTA   
-        38                        MARIANA DA SILVA ALMEIDA   
-        39                   MATEUS MARQUES DE ALBUQUERQUE   
-        40                        MATHEUS PEREIRA DA SILVA   
-        41                  MAYRA RAFAELLA GALVINCIO SILVA   
-        42                 PEDRO HENRIQUE DE ARAUJO FELIPE   
-        43                          RAYAN DE FREITAS SOUZA   
-        44                         RENAN RODRIGUES BARBOSA   
-        45                         RENAN RODRIGUES BARBOSA   
-        46                SABRYNA DICKSAN SILVA MEIRA LIMA   
-        47                        SAYONARA MARIA BELARMINO   
-        48                             THIAGO DIAS GALDINO   
-        49                      TIAGO PEDRO PINTO DE SOUZA   
-        50                          VITOR BRAGA DE AZEVEDO   
-        51                       VITOR GABRIEL SANTOS MELO   
-        
-                                                        curso  \textbackslash{}
-        0            ENGENHARIA MECANICA - D (Campina Grande)   
-        1                   METEOROLOGIA - D (Campina Grande)   
-        2            ENGENHARIA AGRICOLA - D (Campina Grande)   
-        3                   ENGENHARIA AMBIENTAL - D (Pombal)   
-        4                         DESIGN - D (Campina Grande)   
-        5   LETRAS - LINGUA INGLESA (LIC) - D (Campina Gra{\ldots}   
-        6                    ESTATISTICA - D (Campina Grande)   
-        7                   METEOROLOGIA - D (Campina Grande)   
-        8                                 DIREITO - N (Sousa)   
-        9             ENGENHARIA QUIMICA - D (Campina Grande)   
-        10              ENGENHARIA CIVIL - D (Campina Grande)   
-        11        CIENCIAS SOCIAIS (BAC) - D (Campina Grande)   
-        12               ENGENHARIA ELETRICA (Campina Grande)   
-        13                 ADMINISTRACAO - D (Campina Grande)   
-        14              ENGENHARIA CIVIL - D (Campina Grande)   
-        15              MATEMATICA (BAC) - D (Campina Grande)   
-        16               ENGENHARIA ELETRICA (Campina Grande)   
-        17        ENGENHARIA DE PRODUCAO - D (Campina Grande)   
-        18         CIENCIA DA COMPUTACAO - D (Campina Grande)   
-        19               ENGENHARIA ELETRICA (Campina Grande)   
-        20         CIENCIA DA COMPUTACAO - D (Campina Grande)   
-        21              ENGENHARIA CIVIL - D (Campina Grande)   
-        22              MATEMATICA (LIC) - D (Campina Grande)   
-        23              ENGENHARIA CIVIL - D (Campina Grande)   
-        24                            ODONTOLOGIA - D (Patos)   
-        25              MATEMATICA (LIC) - D (Campina Grande)   
-        26               ENGENHARIA ELETRICA (Campina Grande)   
-        27                    ENFERMAGEM - D (Campina Grande)   
-        28               ENGENHARIA ELETRICA (Campina Grande)   
-        29                   ESTATISTICA - D (Campina Grande)   
-        30         CIENCIA DA COMPUTACAO - D (Campina Grande)   
-        31               ENGENHARIA ELETRICA (Campina Grande)   
-        32         CIENCIA DA COMPUTACAO - D (Campina Grande)   
-        33                  ARTE E MIDIA - D (Campina Grande)   
-        34           ENGENHARIA AGRICOLA - D (Campina Grande)   
-        35        ENGENHARIA DE PETROLEO - D (Campina Grande)   
-        36           ENGENHARIA AGRICOLA - D (Campina Grande)   
-        37       ENGENHARIA DE ALIMENTOS - D (Campina Grande)   
-        38                         SERVICO SOCIAL - M (Sousa)   
-        39           ENGENHARIA MECANICA - D (Campina Grande)   
-        40                 ADMINISTRACAO - D (Campina Grande)   
-        41               ENGENHARIA ELETRICA (Campina Grande)   
-        42               ENGENHARIA ELETRICA (Campina Grande)   
-        43                    ENFERMAGEM - D (Campina Grande)   
-        44               ENGENHARIA ELETRICA (Campina Grande)   
-        45              MATEMATICA (LIC) - D (Campina Grande)   
-        46            ENGENHARIA QUIMICA - D (Campina Grande)   
-        47                   ESTATISTICA - D (Campina Grande)   
-        48       ENGENHARIA DE MATERIAIS - D (Campina Grande)   
-        49           ENGENHARIA MECANICA - D (Campina Grande)   
-        50              ENGENHARIA CIVIL - D (Campina Grande)   
-        51           ENGENHARIA MECANICA - D (Campina Grande)   
-        
-                                             cursodeinteresse  ingresso  \textbackslash{}
-        0                                                 NaN    2017.2   
-        1                                                 NaN    2017.1   
-        2   ENGENHARIA CIVIL, ENGENHARIA MECANICA, ARQUITE{\ldots}    2017.1   
-        3                                            NAO SABE    2016.1   
-        4                                         ARQUITETURA    2017.2   
-        5                                            NAO SABE    2017.1   
-        6                  CIENCIA DA COMPUTACAO\textbackslash{}nODONTOLOGIA    2017.1   
-        7                                          PSICOLOGIA    2017.1   
-        8                                             DIREITO    2017.1   
-        9                                          ENGENHARIA    2017.1   
-        10                                        ARQUITETURA    2017.1   
-        11                                                NaN    2017.1   
-        12                                  ALGUMA ENGENHARIA    2017.1   
-        13                                        BIOMEDICINA    2017.2   
-        14                                                NaN    2017.1   
-        15              DIREITO, ENGENHARIA CIVIL, MATEMATICA    2017.1   
-        16                                                NaN    2017.1   
-        17                                                NaN    2015.1   
-        18                                                NaN    2017.2   
-        19                                      ENG. ELETRICA    2017.1   
-        20                                             EXATAS    2017.1   
-        21               ENGENHARIA CIVIL, ENGENHARIA QUIMICA    2017.1   
-        22                                                NaN    2017.1   
-        23                                                NaN    2017.2   
-        24                                    DIREITO, DESIGN    2017.2   
-        25                                                NaN    2017.1   
-        26                                      ENG. ELETRICA    2017.1   
-        27                                           MEDICINA    2017.2   
-        28                                     SAUDE MEDICINA    2017.1   
-        29         CIENCIA DA COMPUTACAO, ENGENHARIA ELETRICA    2017.1   
-        30                                           NAO SABE    2017.1   
-        31                                      ENG. ELETRICA    2017.1   
-        32                            CIENCIAS DA COMPUTACAO,    2017.1   
-        33                                         PSICOLOGIA    2017.2   
-        34                                              SAUDE    2017.1   
-        35                                              SAUDE    2015.1   
-        36                                              SAUDE    2017.1   
-        37                                ENGENHARIA ELETRICA    2017.1   
-        38                                                NaN    2015.1   
-        39                                                NaN    2017.1   
-        40                              CIENCIA DA COMPUTACAO    2016.2   
-        41                                                NaN    2017.1   
-        42           ENGENHARIA ELETRICA, ENGENHARIA MECANICA    2017.1   
-        43                                           MEDICINA    2017.2   
-        44                                                NaN    2017.2   
-        45                                                NaN    2017.1   
-        46                                  ALGUMA ENGENHARIA    2017.1   
-        47                                                NaN    2017.1   
-        48                                                NaN    2017.1   
-        49                                        ODONTOLOGIA    2017.2   
-        50                                   ENGENHARIA CIVIL    2017.1   
-        51                              EXATAS  ENG. MECANICA    2017.1   
-        
-                                                       escola  
-        0                                    COLEGIO PANORAMA  
-        1                                    COLEGIO PANORAMA  
-        2                                      COLEGIO MOTIVA  
-        3   ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        4                                      COLEGIO MOTIVA  
-        5   ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        6   ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        7   ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        8                                      COLEGIO MOTIVA  
-        9   ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        10                                     COLEGIO MOTIVA  
-        11  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        12                                     COLEGIO MOTIVA  
-        13  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        14                                   COLEGIO PANORAMA  
-        15                                     COLEGIO MOTIVA  
-        16                                   COLEGIO PANORAMA  
-        17                ESCOLA DR. ADILSON BEZERRA DE SOUZA  
-        18                                   COLEGIO PANORAMA  
-        19  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        20                                     COLEGIO MOTIVA  
-        21                                     COLEGIO MOTIVA  
-        22                                   COLEGIO PANORAMA  
-        23                                   COLEGIO PANORAMA  
-        24                                     COLEGIO MOTIVA  
-        25                                   COLEGIO PANORAMA  
-        26                                     COLEGIO MOTIVA  
-        27                                     COLEGIO MOTIVA  
-        28                                     COLEGIO MOTIVA  
-        29  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        30                                     COLEGIO MOTIVA  
-        31                                     COLEGIO MOTIVA  
-        32                                     COLEGIO MOTIVA  
-        33  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        34  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        35  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        36  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        37                                     COLEGIO MOTIVA  
-        38  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        39              COLEGIO MUNICIPAL MONSENHOR STANISLAU  
-        40  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        41                                   COLEGIO PANORAMA  
-        42                                     COLEGIO MOTIVA  
-        43                                     COLEGIO MOTIVA  
-        44                                   COLEGIO PANORAMA  
-        45                                   COLEGIO PANORAMA  
-        46                                     COLEGIO MOTIVA  
-        47  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        48  ESCOLA ESTADUAL DE ENSINO FUNDAMENTAL E MEDIO {\ldots}  
-        49                                     COLEGIO MOTIVA  
-        50                                     COLEGIO MOTIVA  
-        51                                     COLEGIO MOTIVA  
-\end{Verbatim}
-            
     O número total de alunos que visitaram a Praça entre 2015 e 2017 foi
 1348. Destes, 52 foram selecionados nas chamadas de ingresso da UFCG.
 Sendo 25 mulheres e 27 homens, correspondendo a 48\% e 52\%
@@ -542,90 +307,42 @@ respectivamente, do total de ingressantes
 
 O quantitativo de alunos por período pode ser visto no gráfico abaixo:
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{ingressosPorAno} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ingresso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}
-        \PY{c+c1}{\PYZsh{}Criando o gráfico de da quantidade de alunos que ingressaram na UFCG em cada periodo}
-        \PY{n}{ingressosPorAno}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-        
-        \PY{c+c1}{\PYZsh{}Especificando o gráfico}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de alunos ingressos por periodo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Período}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de alunos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
+
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     As escolas visitantes que tiveram alunos aprovados no vestibular pode
 ser vistas abaixo
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{aprovacoesEscolas} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{escola}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
-         \PY{c+c1}{\PYZsh{}Criando o gráfico de da quantidade de alunos que ingressaram na UFCG em cada periodo}
-         \PY{n}{aprovacoesEscolas}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{c+c1}{\PYZsh{}Enfeitando o gráfico}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Porcentagem de alunos ingressos por escolas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{c+c1}{\PYZsh{}plt.xlabel(\PYZsq{}Período\PYZsq{})}
-         \PY{c+c1}{\PYZsh{}plt.ylabel(\PYZsq{}Quantidade de alunos\PYZsq{})}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
+
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \adjustimage{max size={1.0\linewidth}{0.9\paperheight}}{output_7_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     O curso com mais aprovações pelos visitantes da Praça foi Engenharia
 Elética com 8. O gráfico abaixo mostra quais foram os cursos escolhidos
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{}Criando gráfico dos cursos que os alunos ingressaram}
-         \PY{n}{cursos} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{curso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
-         \PY{n}{cursos}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cursos que os alunos foram selecionados}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
 
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}11}]:} Text(0.5,1,'Cursos que os alunos foram selecionados')
-\end{Verbatim}
-            
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{correlacaocurso} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/resultadosPesquisaCursos.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
     O campus com mais selecionados foi Campus Central da UFCG, localizado em
 Campina Grande, evidenciando a importância da Praça das Profissões
 dentro do âmbito muncipal
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{}Quantitativo de alunos ingressos por campus }
-         \PY{n}{ingressosPorCampus} \PY{o}{=} \PY{n}{correlacaocurso}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
-         \PY{n}{ingressosPorCampus}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantitativo de alunos ingressos por campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nº de Alunos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-
+ 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -635,21 +352,11 @@ as escolhas convergiram no mesmo curso, ou se o aluno optou por um curso
 da mesma áera ou ainda se o curso que ele queria no dia da visita não
 tem nenhuma correlação com o curso em que ele ingressou na instituição.
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}criando o gráfico da correlação dos cursos escolhidos pelo os que passou}
-         
-         \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mesmo Curso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mesma Area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Área Diferente}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sem Informacao}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{}campos do eixo x}
-         \PY{n}{y} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{19}\PY{p}{]} \PY{c+c1}{\PYZsh{} valores do campo y}
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{11} \PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Relação do curso desejado na visita e curso que foi selecionado}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
+
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
