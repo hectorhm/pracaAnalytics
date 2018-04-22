@@ -13,8 +13,7 @@
 \documentclass[11pt]{article}
 
     
-    \usepackage[brazilian]{babel}
-    \usepackage[T1]{fontenc}
+    
     \usepackage[T1]{fontenc}
     % Nicer default font (+ math font) than Computer Modern for most use cases
     \usepackage{mathpazo}
@@ -142,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{An?lise\_Praca}
+    \title{Analise\_Praca}
     
     
     
@@ -291,20 +290,32 @@ envolvidas na pesquisa foram realizadas utilizando banco de dados
 relacional, sendo o PostGres o Sistema de Gerenciamento de Banco de
 Dados utilizado.
 
+Ao visitar o projeto o aluno é questionado sobre qual curso ele almeja
+para sua formação acadêmica, ficando essa informação guardada no banco
+de dados do projeto. Visando analisar a quantidade de alunos que
+visitaram o projeto entre os anos de 2015 a 2017 e se estes alunos
+ingressaram como alunos da UFCG, foi-se pensado na criação deste
+trabalho. A ferramenta utilizada para a importar os dados dos arquivos e
+criar os gráficos foi o Jupyter Notebook, que oferece suporte a
+linguagem de programação Python. Por este motivo existem códigos desta
+linguagem no trabalho, isto mostra o como cada gráfico foi construído.
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}9}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
         \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{random} \PY{k}{as} \PY{n+nn}{random}
         \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display}
         \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ggplot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}808080}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}737373}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}666666}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}595959}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}4c4c4c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}404040}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}333333}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}262626}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}191919}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}0c0c0c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}000000}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{}cores usadas nos gráficos}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}Leitura de Arquivo}
-         \PY{n}{ingressos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{resultadosPesquisa.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ingressos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/resultadosPesquisa.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -313,19 +324,19 @@ eles foram selecionados na UFCG, o curso que eles informaram que teriam
 interesse em cursar em sua visita na Praça das Profissões e também a
 escola onde estudavam.
 
-    O número total de alunos que visitaram a Praça entre 2015 e 2017 foi
-1348. Destes, 52 foram selecionados nas chamadas de ingresso da UFCG.
-Sendo 25 mulheres e 27 homens, correspondendo a 48\% e 52\%
-respectivamente, do total de ingressantes
+    O número total de alunos do ensino médio que visitaram a Praça das
+Profissões entre 2015 e 2017 foi 1319. Destes, 52 foram selecionados nas
+chamadas de ingresso da UFCG. Sendo 25 mulheres e 27 homens,
+correspondendo a 48\% e 52\% respectivamente, do total de ingressantes
 
 O quantitativo de alunos por período pode ser visto no gráfico abaixo:
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}11}]:} \PY{n}{ingressosPorAno} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ingresso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}
          \PY{c+c1}{\PYZsh{}Criando o gráfico de da quantidade de alunos que ingressaram na UFCG em cada periodo}
-         \PY{n}{ingressosPorAno}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ingressosPorAno}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{)}
          
-         \PY{c+c1}{\PYZsh{}Enfeitando o gráfico}
+         \PY{c+c1}{\PYZsh{}Alterando coordenadas do gráfico}
          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de alunos ingressos por periodo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Período}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de alunos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -334,7 +345,7 @@ O quantitativo de alunos por período pode ser visto no gráfico abaixo:
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -344,56 +355,46 @@ ser vistas abaixo
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}12}]:} \PY{n}{aprovacoesEscolas} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{escola}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
          \PY{c+c1}{\PYZsh{}Criando o gráfico de da quantidade de alunos que ingressaram na UFCG em cada periodo}
-         \PY{n}{aprovacoesEscolas}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{c+c1}{\PYZsh{}Enfeitando o gráfico}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Porcentagem de alunos ingressos por escolas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{aprovacoesEscolas}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Porcentagem de alunos ingressos por escolas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} título do gráfico}
          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{c+c1}{\PYZsh{}plt.xlabel(\PYZsq{}Período\PYZsq{})}
-         \PY{c+c1}{\PYZsh{}plt.ylabel(\PYZsq{}Quantidade de alunos\PYZsq{})}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{upper left}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} inserindo legendas}
          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    O curso com mais aprovações pelos visitantes da Praça foi Engenharia
-Elética com 8. O gráfico abaixo mostra quais foram os cursos escolhidos
+    O gráfico abaixo mostra quais foram os cursos que os alunos foram
+aprovados
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{}Criando gráfico dos cursos que os alunos ingressaram}
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{}Criando gráfico dos cursos que os alunos ingressaram}
          \PY{n}{cursos} \PY{o}{=} \PY{n}{ingressos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{curso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
-         \PY{n}{cursos}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cursos que os alunos foram selecionados}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cursos}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{barh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cursos que os alunos visitantes foram aprovados no processo seletivo da UFCG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}13}]:} Text(0.5,1,'Cursos que os alunos foram selecionados')
+{\color{outcolor}Out[{\color{outcolor}16}]:} Text(0.5,1,'Cursos que os alunos visitantes foram aprovados no processo seletivo da UFCG')
 \end{Verbatim}
             
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{correlacaocurso} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{resultadosPesquisaCursos.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    O campus com mais selecionados foi Campus Central da UFCG, localizado em
-Campina Grande, evidenciando a importância da Praça das Profissões
-dentro do âmbito muncipal
+    O gráfico abaixo mostra o quantitavo de alunos ingressantes por campus
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}Quantitativo de alunos ingressos por campus }
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{correlacaocurso} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/resultadosPesquisaCursos.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}Quantitativo de alunos ingressos por campus }
          \PY{n}{ingressosPorCampus} \PY{o}{=} \PY{n}{correlacaocurso}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
-         \PY{n}{ingressosPorCampus}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ingressosPorCampus}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{)}
          
          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantitativo de alunos ingressos por campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Campus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -414,13 +415,13 @@ da mesma áera ou ainda se o curso que ele queria no dia da visita não
 tem nenhuma correlação com o curso em que ele ingressou na instituição.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{}criando o gráfico da correlação dos cursos escolhidos pelo os que passou}
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}criando o gráfico da correlação dos cursos escolhidos pelo os que passou}
          
          \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mesmo Curso}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mesma Area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Área Diferente}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sem Informacao}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{}campos do eixo x}
          \PY{n}{y} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{19}\PY{p}{]} \PY{c+c1}{\PYZsh{} valores do campo y}
          
-         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{11} \PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}808080}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Relação do curso desejado na visita e curso que foi selecionado}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
